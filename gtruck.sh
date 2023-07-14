@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Specify the directory to check
-target_dir="/abc/def/pqr/"
+# Specify the directories to check
+target_dirs=("/abc/def/pqr/" "/abc/111/pqr/")
 
-# Check if the target directory is present in the dustbin.txt file
-if grep -q "$target_dir" "dustbin.txt"; then
+# Check if any of the target directories are present in the dustbin.txt file
+if grep -E -q "${target_dirs[0]}|${target_dirs[1]}" "dustbin.txt"; then
     # Read the file line by line
     while IFS= read -r line
     do
-        # Check if the line starts with the target directory
-        if ! echo "$line" | grep -q "^$target_dir"; then
+        # Check if the line starts with any of the target directories
+        if ! echo "$line" | grep -E -q "^${target_dirs[0]}|^${target_dirs[1]}"; then
             echo "Permission denied."
             exit 1
         fi
@@ -29,5 +29,5 @@ if grep -q "$target_dir" "dustbin.txt"; then
         fi
     done < "dustbin.txt"
 else
-    echo "No lines with \"$target_dir\" found in dustbin.txt."
+    echo "No lines with the target directories found in dustbin.txt."
 fi
