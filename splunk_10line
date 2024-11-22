@@ -1,0 +1,27 @@
+To extract and print the error code along with the first 10 lines of error.stack_trace from Splunk logs, you can use a combination of rex and eval commands. Here's an example Splunk query:
+
+your_search_query
+| rex field=error.stack_trace 
+| eval first_10_lines=mvjoin(mvindex(split(error.stack_trace, "\n"), 0, 9), "\n")
+| table error_code first_10_lines
+
+Explanation:
+
+1. rex: Extracts the error code using a regex pattern. Adjust "ErrorCode=(?<error_code>\d+)" as needed to match your error code format.
+
+
+2. split: Splits the error.stack_trace field into lines using \n as the delimiter.
+
+
+3. mvindex: Selects the first 10 lines (indices 0 to 9) from the split array.
+
+
+4. mvjoin: Joins the selected lines back into a single string, separated by \n.
+
+
+5. table: Displays the extracted error_code and the first 10 lines.
+
+
+
+If the error code or error.stack_trace has a different format, provide a sample, and I can refine the query.
+
