@@ -1,1 +1,2 @@
 az aks get-credentials --resource-group <your-resource-group> --name <your-aks-cluster>
+https://acrobat.adobe.com/id/urn:aaid:sc:AP:ab136107-8d14-4b33-98e9-36bd1f6ba
